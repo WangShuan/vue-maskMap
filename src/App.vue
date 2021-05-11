@@ -1,55 +1,83 @@
 <template>
   <div id="app">
     <div class="row no-gutters">
-      <div class="col-sm-3">
+      <div class="col-md-3">
         <div class="toolbox">
           <div class="sticky-top bg-white shadow-sm p-2">
             <div class="form-group d-flex">
-              <label for="cityName" class="mr-2 col-form-label text-right">縣市</label>
+              <label for="cityName" class="mr-2 col-form-label text-right"
+                >縣市</label
+              >
               <div class="flex-fill">
-                <select id="cityName" class="form-control" v-model="select.city">
+                <select
+                  id="cityName"
+                  class="form-control"
+                  v-model="select.city"
+                >
                   <option value>--- 請選擇 ---</option>
-                  <option v-for="c in cityName" :key="c.CityName" :value="c.CityName">{{c.CityName}}</option>
+                  <option
+                    v-for="c in cityName"
+                    :key="c.CityName"
+                    :value="c.CityName"
+                    >{{ c.CityName }}</option
+                  >
                 </select>
               </div>
             </div>
             <div class="form-group d-flex">
-              <label for="area" class="mr-2 col-form-label text-right">地區</label>
+              <label for="area" class="mr-2 col-form-label text-right"
+                >地區</label
+              >
               <div class="flex-fill">
                 <select id="area" class="form-control" v-model="select.town">
                   <option value>--- 請選擇 ---</option>
-                  <option v-for="a in areaName" :key="a.AreaName" :value="a.AreaName">{{a.AreaName}}</option>
+                  <option
+                    v-for="a in areaName"
+                    :key="a.AreaName"
+                    :value="a.AreaName"
+                    >{{ a.AreaName }}</option
+                  >
                 </select>
               </div>
             </div>
-            <p class="mb-0 small text-muted text-right">請先選擇區域查看（綠色表示還有口罩）</p>
+            <p class="mb-0 small text-muted text-right">
+              請先選擇區域查看（綠色表示還有口罩）
+            </p>
           </div>
           <ul class="list-group">
             <template v-for="item in filterData">
               <a
-                :class="{ 'highlight': item.properties.mask_adult || item.properties.mask_child}"
+                :class="{
+                  highlight:
+                    item.properties.mask_adult || item.properties.mask_child,
+                }"
                 class="list-group-item bg-light text-secondary text-left"
                 :key="item.properties.id"
                 @click="penTo(item)"
               >
-                <h3>{{item.properties.name}}</h3>
-                <p
-                  class="mb-0"
-                >成人口罩：{{item.properties.mask_adult}} | 兒童口罩：{{item.properties.mask_child}}</p>
+                <h3>{{ item.properties.name }}</h3>
+                <p class="mb-0">
+                  成人口罩：{{ item.properties.mask_adult }} | 兒童口罩：{{
+                    item.properties.mask_child
+                  }}
+                </p>
                 <p class="mb-0">
                   地址：
                   <a
-                    :href="`https://www.google.com.tw/maps/place/${item.properties.address}`"
+                    :href="
+                      `https://www.google.com.tw/maps/place/${item.properties.address}`
+                    "
                     target="_blank"
                     title="Google Map"
-                  >{{item.properties.address}}</a>
+                    >{{ item.properties.address }}</a
+                  >
                 </p>
               </a>
             </template>
           </ul>
         </div>
       </div>
-      <div class="col-sm-9">
+      <div class="col-md-9">
         <div id="map"></div>
       </div>
     </div>
@@ -178,7 +206,7 @@ export default {
     },
   },
   computed: {
-    areaName: function () {
+    areaName: function() {
       const vm = this;
       let arr = vm.cityName.find((item) => {
         return item.CityName === vm.select.city;
@@ -228,12 +256,18 @@ export default {
 
 #map {
   height: 100vh;
+  @media all and (max-width: 760px) {
+    height: calc(100vh - 300px);
+  }
 }
 .highlight {
   background: #e3ffe8 !important;
 }
 .toolbox {
   height: 100vh;
+  @media all and (max-width: 760px) {
+    height: 300px;
+  }
   overflow-y: auto;
   a {
     cursor: pointer;
